@@ -48,26 +48,35 @@ const firstSlide = document.querySelector('.slide');
 firstSlide.classList.add('active');
 
 let slideIndex = 0;
+console.log(slideIndex);
 
 const arrowPrevEl = document.querySelector('.arrow-prev');
 const arrowNextEl = document.querySelector('.arrow-next');
 
 arrowNextEl.addEventListener('click', function() {
 	const currentSlide = slidesEl[slideIndex];
-	currentSlide.classList.remove('active');
-
-	const nextSlide = slidesEl[slideIndex + 1];
-	nextSlide.classList.add('active');
+	let nextSlide = slidesEl[++slideIndex];
 	
-	slideIndex++;
+	if (slideIndex === slidesEl.length) {
+		slideIndex = 0;
+		nextSlide = slidesEl[slideIndex];
+	}
+	
+	nextSlide.classList.add('active');
+	currentSlide.classList.remove('active');
+	console.log(slideIndex);
 } );
 
 arrowPrevEl.addEventListener('click', function() {
 	const currentSlide = slidesEl[slideIndex];
-	currentSlide.classList.remove('active');
-
-	const nextSlide = slidesEl[slideIndex - 1];
-	nextSlide.classList.add('active');
+	let prevSlide = slidesEl[--slideIndex];
 	
-	slideIndex--;
+	if (slideIndex === 0) {
+		slideIndex = slidesEl.length - 1;
+		prevSlide = slidesEl[slideIndex];
+	}
+	
+	currentSlide.classList.remove('active');
+	prevSlide.classList.add('active');
+	console.log(slideIndex);
 } );
