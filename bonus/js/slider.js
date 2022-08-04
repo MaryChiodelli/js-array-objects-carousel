@@ -51,25 +51,24 @@ slidesEl[slideIndex].classList.add('active');
 const arrowPrevEl = document.querySelector('.arrow-prev');
 const arrowNextEl = document.querySelector('.arrow-next');
 
-const intervalRef = setInterval(goNextSlide, 3000);
+let intervalRef = setInterval(goNextSlide, 3000);
 
 slidesWrapperEl.addEventListener('mouseover', function() {
 	clearInterval(intervalRef);
 });
 
-arrowNextEl.addEventListener('click', goNextSlide);
+slidesWrapperEl.addEventListener('mouseleave', function() {
+	intervalRef = setInterval(goNextSlide, 3000);
+});
+
+arrowNextEl.addEventListener('click', function() {
+	clearInterval(intervalRef);
+	goNextSlide();
+} );
 
 arrowPrevEl.addEventListener('click', function() {
-	const currentSlide = slidesEl[slideIndex];
-	let prevSlide = slidesEl[--slideIndex];
-	
-	if (slideIndex === -1) {
-		slideIndex = slidesEl.length - 1;
-		prevSlide = slidesEl[slideIndex];
-	}
-	
-	currentSlide.classList.remove('active');
-	prevSlide.classList.add('active');
+	clearInterval(intervalRef);
+	goPrevSlide();
 } );
 
 function goNextSlide() {
@@ -83,4 +82,17 @@ function goNextSlide() {
 	
 	nextSlide.classList.add('active');
 	currentSlide.classList.remove('active');
+}
+
+function goPrevSlide() {
+	const currentSlide = slidesEl[slideIndex];
+	let prevSlide = slidesEl[--slideIndex];
+	
+	if (slideIndex === -1) {
+		slideIndex = slidesEl.length - 1;
+		prevSlide = slidesEl[slideIndex];
+	}
+	
+	currentSlide.classList.remove('active');
+	prevSlide.classList.add('active');
 }
