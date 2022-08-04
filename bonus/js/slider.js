@@ -51,18 +51,13 @@ slidesEl[slideIndex].classList.add('active');
 const arrowPrevEl = document.querySelector('.arrow-prev');
 const arrowNextEl = document.querySelector('.arrow-next');
 
-arrowNextEl.addEventListener('click', function() {
-	const currentSlide = slidesEl[slideIndex];
-	let nextSlide = slidesEl[++slideIndex];
-	
-	if (slideIndex === slidesEl.length) {
-		slideIndex = 0;
-		nextSlide = slidesEl[slideIndex];
-	}
-	
-	nextSlide.classList.add('active');
-	currentSlide.classList.remove('active');
-} );
+const intervalRef = setInterval(goNextSlide, 3000);
+
+slidesWrapperEl.addEventListener('mouseover', function() {
+	clearInterval(intervalRef);
+});
+
+arrowNextEl.addEventListener('click', goNextSlide);
 
 arrowPrevEl.addEventListener('click', function() {
 	const currentSlide = slidesEl[slideIndex];
@@ -76,3 +71,16 @@ arrowPrevEl.addEventListener('click', function() {
 	currentSlide.classList.remove('active');
 	prevSlide.classList.add('active');
 } );
+
+function goNextSlide() {
+	const currentSlide = slidesEl[slideIndex];
+	let nextSlide = slidesEl[++slideIndex];
+	
+	if (slideIndex === slidesEl.length) {
+		slideIndex = 0;
+		nextSlide = slidesEl[slideIndex];
+	}
+	
+	nextSlide.classList.add('active');
+	currentSlide.classList.remove('active');
+}
