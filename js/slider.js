@@ -43,7 +43,31 @@ slides.forEach( (slide) => {
 	slidesWrapperEl.innerHTML += li;
 } );
 
+const slidesEl = document.querySelectorAll('.slide');
 const firstSlide = document.querySelector('.slide');
 firstSlide.classList.add('active');
 
-console.log(slidesEl);
+let slideIndex = 0;
+
+const arrowPrevEl = document.querySelector('.arrow-prev');
+const arrowNextEl = document.querySelector('.arrow-next');
+
+arrowNextEl.addEventListener('click', function() {
+	const currentSlide = slidesEl[slideIndex];
+	currentSlide.classList.remove('active');
+
+	const nextSlide = slidesEl[slideIndex + 1];
+	nextSlide.classList.add('active');
+	
+	slideIndex++;
+} );
+
+arrowPrevEl.addEventListener('click', function() {
+	const currentSlide = slidesEl[slideIndex];
+	currentSlide.classList.remove('active');
+
+	const nextSlide = slidesEl[slideIndex - 1];
+	nextSlide.classList.add('active');
+	
+	slideIndex--;
+} );
